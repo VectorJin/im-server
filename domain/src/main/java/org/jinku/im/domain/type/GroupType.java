@@ -1,6 +1,6 @@
 package org.jinku.im.domain.type;
 
-public enum SessionType {
+public enum GroupType {
 
     SINGLE(1, "单聊"),
     GROUP(2, "群聊")
@@ -9,7 +9,7 @@ public enum SessionType {
     private final int value;
     private final String text;
 
-    SessionType(int value, String text) {
+    GroupType(int value, String text) {
         this.value = value;
         this.text = text;
     }
