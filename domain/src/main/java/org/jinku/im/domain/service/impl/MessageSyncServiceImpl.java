@@ -5,7 +5,11 @@ import org.jinku.im.domain.entity.Message;
 import org.jinku.im.domain.repository.SyncRepository;
 import org.jinku.im.domain.service.MessageSyncService;
 import org.jinku.im.domain.type.GroupType;
+import org.jinku.im.domain.vo.SyncVo;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class MessageSyncServiceImpl implements MessageSyncService {
@@ -28,8 +32,10 @@ public class MessageSyncServiceImpl implements MessageSyncService {
     }
 
     private void pushSingleMsg(Message message) {
-        syncRepository.pushSync(syncVoConverter.convert4TargetUser(message));
-        syncRepository.pushSync(syncVoConverter.convert4SenderUser(message));
+        List<SyncVo<Message>> syncVos = new ArrayList<>();
+        syncVos.add(syncVoConverter.convert4TargetUser(message));
+        syncVos.add(syncVoConverter.convert4SenderUser(message));
+        syncRepository.pushSync(syncVos.toArray(new SyncVo<?>[0]));
     }
 
     public void pushGroupMsg(Message message) {

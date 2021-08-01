@@ -4,5 +4,5 @@ import org.jinku.im.domain.vo.SyncVo;
 
 public interface SyncRepository {
 
-    void pushSync(SyncVo<?> syncVo);
+    void pushSync(SyncVo<?>[] syncVos);
 }
