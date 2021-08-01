@@ -1,6 +1,7 @@
 package org.jinku.im.domain.entity;
 
 import lombok.Data;
+import org.jinku.im.domain.type.GroupType;
 
 /**
  * 消息
@@ -10,8 +11,13 @@ public class Message {
 
     private long id;
     private long senderId;
-    private int groupType;
+    private GroupType groupType;
     private long groupId;
-    private String text;
+    private MsgData msgData;
+
+    @Data
+    public static class MsgData {
+        private String text;
+    }
 
 }

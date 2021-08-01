@@ -1,5 +1,7 @@
 package org.jinku.im.domain.type;
 
+import java.util.Arrays;
+
 public enum GroupType {
 
     SINGLE(1, "单聊"),
@@ -12,6 +14,12 @@ public enum GroupType {
     GroupType(int value, String text) {
         this.value = value;
         this.text = text;
+    }
+
+    public static GroupType getGroup(int type) {
+        return Arrays.stream(GroupType.values())
+                .filter(group -> group.getValue() == type)
+                .findAny().orElse(null);
     }
 
     public int getValue() {

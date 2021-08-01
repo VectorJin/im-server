@@ -3,6 +3,7 @@ package org.jinku.im.application.convert;
 import org.jinku.im.application.param.SendMsgParam;
 import org.jinku.im.domain.entity.Message;
 import org.jinku.im.domain.repository.IDGenRepository;
+import org.jinku.im.domain.type.GroupType;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,8 +20,10 @@ public class MessageConverter {
         message.setId(idGenRepository.genID());
         message.setSenderId(sendMsgParam.getUserId());
         message.setGroupId(sendMsgParam.getGroupId());
-        message.setGroupType(sendMsgParam.getGroupType());
-        message.setText(sendMsgParam.getMsgData().getText());
+        message.setGroupType(GroupType.getGroup(sendMsgParam.getGroupType()));
+        Message.MsgData msgData = new Message.MsgData();
+        message.setMsgData(msgData);
+        msgData.setText(sendMsgParam.getMsgData().getText());
         return message;
     }
 }
