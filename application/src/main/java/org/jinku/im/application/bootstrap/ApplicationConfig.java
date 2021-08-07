@@ -11,20 +11,18 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.util.Objects;
 
 @Configuration
 @ComponentScan(basePackages = "org.jinku.im")
 @MapperScan("org.jinku.im.repository.dao")
-@PropertySource("classpath:/config/application.properties")
+@PropertySource("classpath:/application.properties")
 public class ApplicationConfig {
 
-    private final Environment env;
-
-    public ApplicationConfig(Environment env) {
-        this.env = env;
-    }
+    @Resource
+    protected Environment env;
 
     @Bean
     public DataSource dataSource() {
