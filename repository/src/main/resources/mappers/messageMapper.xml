@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jinku.im.repository.dao.MessageDao">
+
+    <sql id="ALL_COLUMNS">
+    id, msgId, senderId, groupType, groupId, msgData, ctime, utime
+    </sql>
+    <sql id="INSERT_COLUMNS">
+    msgId, senderId, groupType, groupId, msgData, ctime, utime
+    </sql>
+
+    <insert id="insert" parameterType="org.jinku.im.repository.dao.po.MessagePo">
+        insert into message(<include refid="INSERT_COLUMNS"/>)
+        values(#{msgId},#{senderId},#{groupType},#{groupId},#{msgData},#{ctime}, #{ctime})
+    </insert>
+
+    <select id="selectById" resultType="org.jinku.im.repository.dao.po.MessagePo">
+        select <include refid="INSERT_COLUMNS"/>
+        from message
+        where msgId = #{msgId}
+    </select>
+</mapper>

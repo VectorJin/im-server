@@ -1,0 +1,56 @@
+package org.jinku.im.application.bootstrap;
+
+import com.alibaba.druid.pool.DruidDataSource;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
+
+import javax.sql.DataSource;
+import java.util.Objects;
+
+@Configuration
+@ComponentScan(basePackages = "org.jinku.im")
+@MapperScan("org.jinku.im.repository.dao")
+@PropertySource("classpath:/config/application.properties")
+public class ApplicationConfig {
+
+    private final Environment env;
+
+    public ApplicationConfig(Environment env) {
+        this.env = env;
+    }
+
+    @Bean
+    public DataSource dataSource() {
+        DruidDataSource dataSource = new DruidDataSource();
+        dataSource.setUrl(env.getProperty("datasource.url"));
+        dataSource.setUsername(env.getProperty("datasource.username"));
+        dataSource.setPassword(env.getProperty("datasource.password"));
+        dataSource.setInitialSize(Integer.parseInt(Objects.requireNonNull(env.getProperty("datasource.initialSize"))));
+        dataSource.setMinIdle(Integer.parseInt(Objects.requireNonNull(env.getProperty("datasource.minIdle"))));
+        dataSource.setMaxActive(Integer.parseInt(Objects.requireNonNull(env.getProperty("datasource.maxActive"))));
+        return dataSource;
+    }
+
+    @Bean
+    public SqlSessionFactory sqlSessionFactory() throws Exception {
+        SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
+        factoryBean.setDataSource(dataSource());
+        factoryBean.setMapperLocations(new ClassPathResource("mappers/*.xml"));
+        return factoryBean.getObject();
+    }
+
+    @Bean
+    public org.apache.ibatis.session.Configuration mybatisConfig() {
+        org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
+        configuration.setCacheEnabled(false);
+        configuration.setMapUnderscoreToCamelCase(true);
+        return configuration;
+    }
+}
