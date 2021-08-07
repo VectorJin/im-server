@@ -2,11 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.jinku.im.repository.dao.MessageDao">
 
+    <resultMap id="BASE_RESULT" type="org.jinku.im.repository.dao.po.MessagePo">
+    </resultMap>
+
     <sql id="ALL_COLUMNS">
-    id, msgId, senderId, groupType, groupId, msgData, ctime, utime
+    id, msg_id, sender_id, group_type, group_id, msg_data, ctime, utime
     </sql>
     <sql id="INSERT_COLUMNS">
-    msgId, senderId, groupType, groupId, msgData, ctime, utime
+    msg_id, sender_id, group_type, group_id, msg_data, ctime, utime
     </sql>
 
     <insert id="insert" parameterType="org.jinku.im.repository.dao.po.MessagePo">
@@ -14,9 +17,9 @@
         values(#{msgId},#{senderId},#{groupType},#{groupId},#{msgData},#{ctime}, #{ctime})
     </insert>
 
-    <select id="selectById" resultType="org.jinku.im.repository.dao.po.MessagePo">
-        select <include refid="INSERT_COLUMNS"/>
+    <select id="selectById" resultMap="BASE_RESULT">
+        select <include refid="ALL_COLUMNS"/>
         from message
-        where msgId = #{msgId}
+        where msg_id = #{msgId}
     </select>
 </mapper>

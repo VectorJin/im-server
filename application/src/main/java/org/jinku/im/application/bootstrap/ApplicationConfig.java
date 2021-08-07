@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -40,7 +41,8 @@ public class ApplicationConfig {
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         factoryBean.setDataSource(dataSource());
-        factoryBean.setMapperLocations(new ClassPathResource("mappers/*.xml"));
+        factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(("classpath:mappers/*Mapper.xml")));
+        factoryBean.setConfiguration(mybatisConfig());
         return factoryBean.getObject();
     }
 

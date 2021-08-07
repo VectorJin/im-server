@@ -11,10 +11,11 @@ public class ApplicationTestConfig extends ApplicationConfig {
 
     @Bean
     public DataSource dataSource() {
-        return new EmbeddedDatabaseBuilder().
-                setType(EmbeddedDatabaseType.H2).
-                addScript("db-schema.sql").
-                addScript("db-data.sql").
-                build();
+        return new EmbeddedDatabaseBuilder()
+                .setType(EmbeddedDatabaseType.H2)
+                .addScript("data/db-mode.sql")
+                .addScript("data/db-schema.sql")
+                .addScript("data/db-data.sql")
+                .build();
     }
 }
