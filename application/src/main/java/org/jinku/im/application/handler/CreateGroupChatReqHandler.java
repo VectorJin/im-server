@@ -1,5 +1,6 @@
 package org.jinku.im.application.handler;
 
+import org.jinku.im.application.ao.ResultAo;
 import org.jinku.im.application.param.CreateGroupChatParam;
 
 /**
@@ -13,7 +14,7 @@ public class CreateGroupChatReqHandler extends AbstractReqHandler<CreateGroupCha
     }
 
     @Override
-    protected void handReqObj(CreateGroupChatParam createGroupChatParam) {
-
+    protected ResultAo handReqObj(CreateGroupChatParam createGroupChatParam) {
+        return ResultAo.success();
     }
 }

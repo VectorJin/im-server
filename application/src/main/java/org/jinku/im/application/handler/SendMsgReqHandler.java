@@ -1,11 +1,15 @@
 package org.jinku.im.application.handler;
 
-import org.jinku.im.application.convert.MessageConverter;
+import org.jinku.im.application.ao.ResultAo;
+import org.jinku.im.application.converter.MessageConverter;
+import org.jinku.im.application.converter.SendMsgAoConverter;
 import org.jinku.im.application.param.SendMsgParam;
 import org.jinku.im.domain.entity.Message;
 import org.jinku.im.domain.repository.MessageRepository;
 import org.jinku.im.domain.service.MessageSyncService;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
  * 发送消息
@@ -13,24 +17,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class SendMsgReqHandler extends AbstractReqHandler<SendMsgParam> {
 
-    private final MessageRepository messageRepository;
-    private final MessageConverter messageConverter;
-    private final MessageSyncService messageSyncService;
-
-    public SendMsgReqHandler(MessageRepository messageRepository, MessageConverter messageConverter,
-                             MessageSyncService messageSyncService) {
-        this.messageRepository = messageRepository;
-        this.messageConverter = messageConverter;
-        this.messageSyncService = messageSyncService;
-    }
+    @Resource
+    private MessageRepository messageRepository;
+    @Resource
+    private MessageConverter messageConverter;
+    @Resource
+    private MessageSyncService messageSyncService;
+    @Resource
+    private SendMsgAoConverter sendMsgAoConverter;
 
     @Override
-    protected void handReqObj(SendMsgParam sendMsgParam) {
+    protected ResultAo handReqObj(SendMsgParam sendMsgParam) {
         // 保存消息
         Message message = messageConverter.convert(sendMsgParam);
         messageRepository.saveMessage(message);
         // 推送同步sync
         messageSyncService.syncMessage(message);
+        return ResultAo.success(sendMsgAoConverter.convert(message));
     }
 
     @Override

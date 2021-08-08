@@ -1,4 +1,4 @@
-package org.jinku.im.application.convert;
+package org.jinku.im.application.converter;
 
 import org.jinku.im.application.param.SendMsgParam;
 import org.jinku.im.domain.entity.Message;

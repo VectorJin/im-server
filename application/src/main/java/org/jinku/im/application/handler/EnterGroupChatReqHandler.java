@@ -1,5 +1,6 @@
 package org.jinku.im.application.handler;
 
+import org.jinku.im.application.ao.ResultAo;
 import org.jinku.im.application.param.EnterGroupChatParam;
 
 /**
@@ -7,8 +8,8 @@ import org.jinku.im.application.param.EnterGroupChatParam;
  */
 public class EnterGroupChatReqHandler extends AbstractReqHandler<EnterGroupChatParam> {
     @Override
-    protected void handReqObj(EnterGroupChatParam enterGroupChatParam) {
-
+    protected ResultAo handReqObj(EnterGroupChatParam enterGroupChatParam) {
+        return ResultAo.success();
     }
 
     @Override
