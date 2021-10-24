@@ -10,6 +10,7 @@ public class MessagePo {
     private Integer groupType;
     private Long groupId;
     private String msgData;
+    private Integer valid;
     private Integer ctime;
     private Integer utime;
 }

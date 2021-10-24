@@ -6,15 +6,15 @@
     </resultMap>
 
     <sql id="ALL_COLUMNS">
-    id, msg_id, sender_id, group_type, group_id, msg_data, ctime, utime
+    id, msg_id, sender_id, group_type, group_id, msg_data, valid, ctime, utime
     </sql>
     <sql id="INSERT_COLUMNS">
-    msg_id, sender_id, group_type, group_id, msg_data, ctime, utime
+    msg_id, sender_id, group_type, group_id, msg_data, valid, ctime, utime
     </sql>
 
     <insert id="insert" parameterType="org.jinku.im.repository.dao.po.MessagePo">
         insert into message(<include refid="INSERT_COLUMNS"/>)
-        values(#{msgId},#{senderId},#{groupType},#{groupId},#{msgData},#{ctime}, #{ctime})
+        values(#{msgId},#{senderId},#{groupType},#{groupId},#{msgData}, 1, UNIX_TIMESTAMP(now()), UNIX_TIMESTAMP(now()))
     </insert>
 
     <select id="selectById" resultMap="BASE_RESULT">

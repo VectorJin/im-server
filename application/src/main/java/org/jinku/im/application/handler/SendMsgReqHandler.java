@@ -31,6 +31,7 @@ public class SendMsgReqHandler extends AbstractReqHandler<SendMsgParam> {
         // 保存消息
         Message message = messageConverter.convert(sendMsgParam);
         messageRepository.saveMessage(message);
+        //TODO 保存会话
         // 推送同步sync
         messageSyncService.syncMessage(message);
         return ResultAo.success(sendMsgAoConverter.convert(message));
