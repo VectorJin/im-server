@@ -4,12 +4,11 @@ import org.jinku.im.BaseTest;
 import org.jinku.im.repository.dao.po.MessagePo;
 import org.junit.Assert;
 import org.junit.Test;
-
-import javax.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class MessageDaoTest extends BaseTest {
 
-    @Resource
+    @Autowired
     private MessageDao messageDao;
 
     @Test
